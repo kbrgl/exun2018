@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
 export default () => (
   <View style={styles.container}>
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Text
         style={{
           marginLeft: 30,
