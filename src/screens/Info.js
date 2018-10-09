@@ -2,8 +2,6 @@
 import React from 'react'
 import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
 
-import Header from '../components/Header'
-
 const unirely = require('../../assets/images/unirely.png')
 const athena = require('../../assets/images/athena.png')
 const digitalIndia = require('../../assets/images/digital-india.png')
@@ -16,7 +14,6 @@ const styles = StyleSheet.create({
 
 export default () => (
   <View style={styles.container}>
-    <Header title="Info" />
     <ScrollView>
       <Text
         style={{

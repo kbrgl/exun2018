@@ -33,9 +33,18 @@ const persistor = persistStore(store)
 sagaMiddleware.run(rootSaga)
 
 const stackConfig = {
-  headerMode: 'none',
+  headerMode: 'float',
   cardStyle: {
     backgroundColor: '#f5f8fe',
+  },
+}
+
+const stackNavigationOptions = {
+  headerStyle: {
+    backgroundColor: '#2977f5',
+  },
+  headerTitleStyle: {
+    color: '#fff',
   },
 }
 
@@ -44,7 +53,8 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: Home,
       navigationOptions: () => ({
-        title: 'Home',
+        title: 'Exun 2018',
+        ...stackNavigationOptions,
       }),
     },
   },
@@ -57,6 +67,7 @@ const InfoStack = createStackNavigator(
       screen: Info,
       navigationOptions: () => ({
         title: 'Info',
+        ...stackNavigationOptions,
       }),
     },
   },
