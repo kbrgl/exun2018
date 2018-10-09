@@ -11,6 +11,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import OneSignal from 'react-native-onesignal'
 
 import Home from './screens/Home'
+import Info from './screens/Info'
 
 import Intro from './components/Intro'
 
@@ -50,9 +51,22 @@ const HomeStack = createStackNavigator(
   stackConfig,
 )
 
+const InfoStack = createStackNavigator(
+  {
+    Info: {
+      screen: Info,
+      navigationOptions: () => ({
+        title: 'Info',
+      }),
+    },
+  },
+  stackConfig,
+)
+
 const Tabs = createBottomTabNavigator(
   {
     Home: HomeStack,
+    Info: InfoStack,
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -63,6 +77,9 @@ const Tabs = createBottomTabNavigator(
         switch (routeName) {
           case 'Home':
             iconName = 'home'
+            break
+          case 'Info':
+            iconName = 'info'
             break
           default:
         }
@@ -114,7 +131,7 @@ class App extends React.Component {
         <PersistGate loading={null} persistor={persistor}>
           <View style={{ flex: 1, backgroundColor: '#f5f8fe' }}>
             <Intro />
-            <Home />
+            <Tabs />
           </View>
         </PersistGate>
       </Provider>
