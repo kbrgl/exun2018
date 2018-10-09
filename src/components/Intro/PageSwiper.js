@@ -14,23 +14,28 @@ type OverlayProps = {
   show: boolean,
   children: Node,
 }
-const Overlay = ({ show, children }: OverlayProps) => (
-  <View
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 666,
-      display: show ? 'flex' : 'none',
-      alignItems: 'stretch',
-      backgroundColor: '#fff',
-    }}
-  >
-    {children}
-  </View>
-)
+const Overlay = ({ show, children }: OverlayProps) => {
+  if (show) {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 666,
+          display: 'flex',
+          alignItems: 'stretch',
+          backgroundColor: '#fff',
+        }}
+      >
+        {children}
+      </View>
+    )
+  }
+  return null
+}
 
 const Wrapper = styled.View`
   flex-direction: row;
@@ -42,7 +47,6 @@ const Wrapper = styled.View`
 const Button = styled.Text`
   color: #2977f5;
   font-weight: 800;
-  line-height: 0;
   padding-left: 50px;
   padding-right: 50px;
 `
@@ -79,14 +83,13 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
   swiper: ?Swiper
 
   renderPagination = () => {
+    const { index } = this.state
+    const { pages, complete } = this.props
     const TouchableScroll = ({ children, scrollBy }) => (
       <TouchableOpacity
         onPress={() => {
           if (this.swiper) {
-            if (
-              (scrollBy < 0 && this.state.index > 0) ||
-              (scrollBy > 0 && this.state.index < this.props.pages.length - 1)
-            )
+            if ((scrollBy < 0 && index > 0) || (scrollBy > 0 && index < pages.length - 1))
               this.swiper.scrollBy(scrollBy)
           }
         }}
@@ -104,7 +107,7 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
       <TouchableScroll scrollBy={-1}>
         <Button
           style={{
-            opacity: this.state.index > 0 ? 1 : 0,
+            opacity: index > 0 ? 1 : 0,
           }}
         >
           BACK
@@ -114,7 +117,7 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
     const DoneButton = (
       <TouchableOpacity
         onPress={async () => {
-          this.props.complete()
+          complete()
           StatusBar.setHidden(false)
         }}
       >
@@ -124,22 +127,19 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
     return (
       <Wrapper>
         {PrevButton}
-        {this.props.pages.map(
-          (page, index) =>
-            this.state.index === index ? (
-              <ActiveDot key={page.heading} />
-            ) : (
-              <Dot key={page.heading} />
-            ),
+        {pages.map(
+          (page, i) =>
+            index === i ? <ActiveDot key={page.heading} /> : <Dot key={page.heading} />,
         )}
-        {this.state.index === this.props.pages.length - 1 ? DoneButton : NextButton}
+        {index === pages.length - 1 ? DoneButton : NextButton}
       </Wrapper>
     )
   }
 
   render() {
+    const { done, pages } = this.props
     return (
-      <Overlay show={!this.props.done}>
+      <Overlay show={!done}>
         <Swiper
           loop={false}
           buttonWrapperStyle={{
@@ -163,7 +163,7 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
           loadMinimal
           loadMinimalSize={1}
         >
-          {this.props.pages.map(page => (
+          {pages.map(page => (
             <Page key={page.heading} {...page} />
           ))}
         </Swiper>
