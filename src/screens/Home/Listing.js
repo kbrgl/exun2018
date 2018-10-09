@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { FlatList, StyleSheet, Text, View, Platform } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Platform, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import Markdown from 'react-native-simple-markdown'
 import { iOSUIKit } from 'react-native-typography'
@@ -24,6 +24,38 @@ type PostType = {
   created_at: string,
 }
 
+const Empty = () => (
+  <View
+    style={{
+      paddingTop: 30,
+      paddingBottom: 30,
+      alignItems: 'center',
+      backgroundColor: '#fff',
+    }}
+  >
+    <View
+      style={{
+        backgroundColor: '#fff',
+        padding: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        borderRadius: 200,
+        borderWidth: 1,
+        borderColor: '#eaeaef',
+      }}
+    >
+      <Text
+        style={{
+          textAlign: 'center',
+          color: '#2977f5',
+          fontWeight: 'bold',
+        }}
+      >
+        Pull to refresh!
+      </Text>
+    </View>
+  </View>
+)
 const Header = () => (
   <LinearGradient
     style={{ paddingTop: 50, paddingBottom: 50, alignItems: 'center' }}
@@ -126,13 +158,20 @@ const Listing = ({ posts, refreshing, refresh }: ListingProps) => (
       marginLeft: 15,
       marginRight: 15,
     }}
+    ListEmptyComponent={Empty}
     ListHeaderComponent={Header}
     ListFooterComponent={Footer}
     data={posts}
     renderItem={({ item }) => <Post {...item} />}
     keyExtractor={item => item.title}
-    refreshing={refreshing}
-    onRefresh={refresh}
+    refreshControl={
+      <RefreshControl
+        colors={['#fff']}
+        refreshing={refreshing}
+        onRefresh={refresh}
+        progressBackgroundColor="#2977f5"
+      />
+    }
     showsVerticalScrollIndicator={false}
   />
 )
