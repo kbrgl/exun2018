@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
+import OneSignal from 'react-native-onesignal'
 
 import Home from './screens/Home'
 
@@ -87,6 +88,10 @@ class App extends React.Component {
     }
   }
 
+  componentWillMount() {
+    OneSignal.init('73966f65-91f6-4d9d-93be-4fd9d4621237')
+  }
+
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange)
   }
@@ -96,7 +101,8 @@ class App extends React.Component {
   }
 
   handleAppStateChange = nextAppState => {
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+    const { appState } = this.state
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
       store.dispatch(postsRefresh())
     }
     this.setState({ appState: nextAppState })
