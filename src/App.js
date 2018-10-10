@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, AppState } from 'react-native'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
@@ -12,13 +12,14 @@ import OneSignal from 'react-native-onesignal'
 
 import Home from './screens/Home'
 import Info from './screens/Info'
+import Notifications from './screens/Notifications'
 
 import Intro from './components/Intro'
 
 import rootSaga from './sagas'
 
 import rootReducer from './reducers'
-import { postsRefresh } from './actions'
+import { postsRefresh, receivedNotification } from './actions'
 
 const persistConfig = {
   key: 'root',
@@ -74,8 +75,49 @@ const InfoStack = createStackNavigator(
   stackConfig,
 )
 
+const NotificationsStack = createStackNavigator(
+  {
+    Notifications: {
+      screen: Notifications,
+      navigationOptions: () => ({
+        title: 'Notifications',
+        ...stackNavigationOptions,
+      }),
+    },
+  },
+  stackConfig,
+)
+
+type NotificationsIconProps = {
+  unread: number,
+  color: string,
+}
+const NotificationsIcon = ({ unread, color }: NotificationsIconProps) => (
+  <View>
+    <FeatherIcon name="bell" size={25} color={color} />
+    {unread > 0 ? (
+      <View
+        style={{
+          position: 'absolute',
+          right: 0,
+          top: 0,
+          backgroundColor: '#c32148',
+          borderRadius: 6,
+          width: 12,
+          height: 12,
+        }}
+      />
+    ) : null}
+  </View>
+)
+
+const ConnectedNotificationsIcon = connect(state => ({
+  unread: state.notifications.filter(notification => !notification.read).length,
+}))(NotificationsIcon)
+
 const Tabs = createBottomTabNavigator(
   {
+    Notifications: NotificationsStack,
     Home: HomeStack,
     Info: InfoStack,
   },
@@ -92,6 +134,8 @@ const Tabs = createBottomTabNavigator(
           case 'Info':
             iconName = 'info'
             break
+          case 'Notifications':
+            return <ConnectedNotificationsIcon color={tintColor} />
           default:
         }
         return <FeatherIcon name={iconName} size={25} color={tintColor} />
@@ -105,6 +149,7 @@ const Tabs = createBottomTabNavigator(
       },
       showLabel: false,
     },
+    initialRouteName: 'Home',
   },
 )
 
@@ -118,7 +163,15 @@ class App extends React.Component {
 
   componentWillMount() {
     OneSignal.init('73966f65-91f6-4d9d-93be-4fd9d4621237')
+
+    // If a notification is received while the app is in the foreground,
+    // send it to notification shade.
+    // This overrides the default behaviour, which is an annoying alert.
     OneSignal.inFocusDisplaying(2)
+
+    OneSignal.addEventListener('received', notification => {
+      store.dispatch(receivedNotification(notification))
+    })
   }
 
   componentDidMount() {
@@ -133,6 +186,7 @@ class App extends React.Component {
     const { appState } = this.state
     if (appState.match(/inactive|background/) && nextAppState === 'active') {
       store.dispatch(postsRefresh())
+      OneSignal.clearOneSignalNotifications()
     }
     this.setState({ appState: nextAppState })
   }
