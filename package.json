@@ -9,6 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "date-fns": "^2.0.0-alpha.21",
     "lodash": "^4.17.11",
     "react": "16.5.0",
     "react-native": "0.57.2",
