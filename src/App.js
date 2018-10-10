@@ -118,6 +118,7 @@ class App extends React.Component {
 
   componentWillMount() {
     OneSignal.init('73966f65-91f6-4d9d-93be-4fd9d4621237')
+    OneSignal.inFocusDisplaying(2)
   }
 
   componentDidMount() {
