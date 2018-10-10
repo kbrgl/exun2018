@@ -1,22 +1,12 @@
 // @flow
 import React from 'react'
-import { FlatList, StyleSheet, Text, View, Platform, RefreshControl } from 'react-native'
+import { FlatList, StyleSheet, Text, View, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
-import Markdown from 'react-native-simple-markdown'
 import { iOSUIKit } from 'react-native-typography'
 import LinearGradient from 'react-native-linear-gradient'
-
-import Padding from '../../components/Padding'
+import { format } from 'date-fns'
 
 import { postsRefresh } from '../../actions'
-
-const formatDate = s => {
-  const d = new Date(s)
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec']
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}, ${d.toLocaleTimeString(
-    'en-us',
-  )}`
-}
 
 type PostType = {
   title: string,
@@ -83,10 +73,13 @@ const Footer = () => (
     <Text
       style={{
         textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
+        letterSpacing: 3,
         color: '#223052',
       }}
     >
-      That&apos;s all for now!
+      &middot;&middot;&middot;
     </Text>
   </LinearGradient>
 )
@@ -110,39 +103,18 @@ const postStyles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#fff',
+    padding: 30,
   },
 })
 
 // eslint-disable-next-line camelcase
 const Post = ({ title, body, created_at }: PostType) => (
   <View style={postStyles.container}>
-    <Padding vertical={30} horizontal={30}>
-      <Text style={[iOSUIKit.largeTitleEmphasized, postStyles.title]}>{title}</Text>
-      <Markdown
-        styles={{
-          text: postStyles.body,
-          inlineCode: {
-            backgroundColor: '#fff',
-            borderWidth: 0,
-            paddingTop: 3,
-            paddingBottom: 3,
-            paddingRight: 5,
-            paddingLeft: 5,
-            borderRadius: 4,
-            fontFamily: Platform.OS === 'android' ? 'Roboto Mono' : 'Menlo',
-          },
-          listItem: {
-            alignItems: 'flex-start',
-            marginBottom: 20,
-          },
-        }}
-      >
-        {body}
-      </Markdown>
-      <View style={postStyles.dateWrapper}>
-        <Text style={postStyles.date}>{formatDate(created_at)}</Text>
-      </View>
-    </Padding>
+    <Text style={[iOSUIKit.largeTitleEmphasized, postStyles.title]}>{title}</Text>
+    <Text style={postStyles.body}>{body}</Text>
+    <View style={postStyles.dateWrapper}>
+      <Text style={postStyles.date}>{format(created_at, 'd MMM yyyy, hh:mm:ss')}</Text>
+    </View>
   </View>
 )
 
