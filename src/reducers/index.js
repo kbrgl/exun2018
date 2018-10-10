@@ -1,4 +1,11 @@
-import { POSTS_REFRESH, POSTS_REFRESH_SUCCESS, INTRO_DONE } from '../constants'
+import {
+  POSTS_REFRESH,
+  POSTS_REFRESH_SUCCESS,
+  INTRO_DONE,
+  RECEIVED_NOTIFICATION,
+  CLEAR_NOTIFICATIONS,
+  READ_NOTIFICATIONS,
+} from '../constants'
 
 const initialState = {
   listing: {
@@ -6,6 +13,7 @@ const initialState = {
   },
   introDone: false,
   posts: [],
+  notifications: [],
 }
 
 const exunApp = (state = initialState, action) => {
@@ -29,6 +37,24 @@ const exunApp = (state = initialState, action) => {
       return {
         ...state,
         introDone: true,
+      }
+    case RECEIVED_NOTIFICATION:
+      return {
+        ...state,
+        notifications: [...state.notifications, action.payload],
+      }
+    case CLEAR_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: [],
+      }
+    case READ_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: state.notifications.map(notification => ({
+          ...notification,
+          read: true,
+        })),
       }
     default:
       return state
