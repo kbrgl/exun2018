@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">SAoW9iURyI7OU86WdAOyN3E87rlkBJrcejncQ</string>
     <string name="app_name">Exun 2018</string>
 </resources>

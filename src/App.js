@@ -9,6 +9,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import OneSignal from 'react-native-onesignal'
+import codePush from 'react-native-code-push'
 
 import Home from './screens/Home'
 import Info from './screens/Info'
@@ -205,4 +206,6 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default codePush({
+  mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESUME,
+})(App)
