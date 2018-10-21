@@ -14,6 +14,7 @@ import codePush from 'react-native-code-push'
 import Home from './screens/Home'
 import Info from './screens/Info'
 import Notifications from './screens/Notifications'
+import Schedule from './screens/Schedule'
 
 import Intro from './components/Intro'
 
@@ -76,6 +77,19 @@ const InfoStack = createStackNavigator(
   stackConfig,
 )
 
+const ScheduleStack = createStackNavigator(
+  {
+    Schedule: {
+      screen: Schedule,
+      navigationOptions: () => ({
+        title: 'Schedule',
+        ...stackNavigationOptions,
+      }),
+    },
+  },
+  stackConfig,
+)
+
 const NotificationsStack = createStackNavigator(
   {
     Notifications: {
@@ -118,8 +132,9 @@ const ConnectedNotificationsIcon = connect(state => ({
 
 const Tabs = createBottomTabNavigator(
   {
-    Notifications: NotificationsStack,
     Home: HomeStack,
+    Notifications: NotificationsStack,
+    Schedule: ScheduleStack,
     Info: InfoStack,
   },
   {
@@ -135,6 +150,9 @@ const Tabs = createBottomTabNavigator(
           case 'Info':
             iconName = 'info'
             break
+          case 'Schedule':
+            iconName = 'calendar'
+            break
           case 'Notifications':
             return <ConnectedNotificationsIcon color={tintColor} />
           default:
@@ -143,10 +161,10 @@ const Tabs = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#1e3055',
-      inactiveTintColor: '#8fa7bb',
+      activeTintColor: '#fff',
+      inactiveTintColor: '#ffffffaa',
       style: {
-        backgroundColor: '#f5f8fe',
+        backgroundColor: '#2977f5',
       },
       showLabel: false,
     },
