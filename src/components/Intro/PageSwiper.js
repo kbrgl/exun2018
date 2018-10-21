@@ -1,14 +1,17 @@
 // @flow
 import React, { Component } from 'react'
 import type { Node } from 'react'
-import { TouchableOpacity, StatusBar, View } from 'react-native'
+import { TouchableOpacity, StatusBar, View, Image } from 'react-native'
 import { connect } from 'react-redux'
 import Swiper from 'react-native-swiper'
 import styled from 'styled-components'
+import LinearGradient from 'react-native-linear-gradient'
 import Page from './Page'
 import type { PageDescriptor } from './Page'
 
 import { introDone } from '../../actions'
+
+const logo = require('../../../assets/images/logo.png')
 
 type OverlayProps = {
   show: boolean,
@@ -17,7 +20,7 @@ type OverlayProps = {
 const Overlay = ({ show, children }: OverlayProps) => {
   if (show) {
     return (
-      <View
+      <LinearGradient
         style={{
           position: 'absolute',
           top: 0,
@@ -27,28 +30,30 @@ const Overlay = ({ show, children }: OverlayProps) => {
           zIndex: 666,
           display: 'flex',
           alignItems: 'stretch',
-          backgroundColor: '#fff',
         }}
+        colors={['#fff', '#f5f8fe']}
       >
         {children}
-      </View>
+      </LinearGradient>
     )
   }
   return null
 }
 
 const Wrapper = styled.View`
-  flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   margin-bottom: 30px;
   position: relative;
 `
 const Button = styled.Text`
+  background-color: #fff;
+  padding: 10px 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+  overflow: hidden;
   color: #2977f5;
   font-weight: 800;
-  padding-left: 50px;
-  padding-right: 50px;
 `
 const Dot = styled.View`
   background-color: #b2d0ff;
@@ -85,35 +90,6 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
   renderPagination = () => {
     const { index } = this.state
     const { pages, complete } = this.props
-    const TouchableScroll = ({ children, scrollBy }) => (
-      <TouchableOpacity
-        onPress={() => {
-          if (this.swiper) {
-            if ((scrollBy < 0 && index > 0) || (scrollBy > 0 && index < pages.length - 1))
-              this.swiper.scrollBy(scrollBy)
-          }
-        }}
-      >
-        {children}
-      </TouchableOpacity>
-    )
-
-    const NextButton = (
-      <TouchableScroll scrollBy={1}>
-        <Button>NEXT</Button>
-      </TouchableScroll>
-    )
-    const PrevButton = (
-      <TouchableScroll scrollBy={-1}>
-        <Button
-          style={{
-            opacity: index > 0 ? 1 : 0,
-          }}
-        >
-          BACK
-        </Button>
-      </TouchableScroll>
-    )
     const DoneButton = (
       <TouchableOpacity
         onPress={async () => {
@@ -121,17 +97,22 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
           StatusBar.setHidden(false)
         }}
       >
-        <Button>DONE</Button>
+        <Button>START</Button>
       </TouchableOpacity>
     )
     return (
       <Wrapper>
-        {PrevButton}
-        {pages.map(
-          (page, i) =>
-            index === i ? <ActiveDot key={page.heading} /> : <Dot key={page.heading} />,
-        )}
-        {index === pages.length - 1 ? DoneButton : NextButton}
+        <View
+          style={{
+            flexDirection: 'row',
+          }}
+        >
+          {pages.map(
+            (page, i) =>
+              index === i ? <ActiveDot key={page.heading} /> : <Dot key={page.heading} />,
+          )}
+        </View>
+        {DoneButton}
       </Wrapper>
     )
   }
@@ -140,14 +121,29 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
     const { done, pages } = this.props
     return (
       <Overlay show={!done}>
+        <View
+          style={{
+            flex: 5 / 6,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            style={{
+              width: 162,
+              height: 66,
+            }}
+            source={logo}
+            defaultSource={logo}
+            resizeMode="cover"
+          />
+        </View>
         <Swiper
           loop={false}
+          showsButtons
           buttonWrapperStyle={{
             backgroundColor: 'transparent',
             flexDirection: 'row',
-            position: 'absolute',
-            top: 0,
-            left: 0,
             flex: 1,
             paddingHorizontal: 50,
             paddingVertical: 40,
@@ -162,6 +158,7 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
           }}
           loadMinimal
           loadMinimalSize={1}
+          bounces
         >
           {pages.map(page => (
             <Page key={page.heading} {...page} />
