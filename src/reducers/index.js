@@ -41,7 +41,8 @@ const exunApp = (state = initialState, action) => {
     case RECEIVED_NOTIFICATION:
       return {
         ...state,
-        notifications: [...state.notifications, action.payload],
+        // Most recent first
+        notifications: [action.payload, ...state.notifications],
       }
     case CLEAR_NOTIFICATIONS:
       return {
