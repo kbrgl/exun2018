@@ -37,7 +37,8 @@ const Empty = () => (
       <Text
         style={{
           textAlign: 'center',
-          color: '#2977f5',
+          fontSize: 15,
+          color: '#223052',
           fontWeight: 'bold',
         }}
       >
@@ -98,6 +99,7 @@ const postStyles = StyleSheet.create({
     color: '#ccc',
   },
   body: {
+    fontSize: 15,
     marginTop: 8,
     color: '#223052',
   },

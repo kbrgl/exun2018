@@ -28,6 +28,7 @@ const Empty = () => (
       <Text
         style={{
           textAlign: 'center',
+          fontSize: 15,
           color: '#223052',
           fontWeight: 'bold',
         }}
@@ -88,11 +89,13 @@ const Separator = () => (
 
 const postStyles = StyleSheet.create({
   title: {
+    fontSize: 15,
     marginBottom: 8,
     letterSpacing: 0,
     color: '#223052',
   },
   body: {
+    fontSize: 15,
     marginTop: 8,
     color: '#223052',
   },
