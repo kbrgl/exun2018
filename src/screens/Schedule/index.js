@@ -20,6 +20,81 @@ const styles = StyleSheet.create({
   },
 })
 
+type EventProps = {
+  title: string,
+  location: string,
+  duration: string,
+}
+const Event = ({ title, location, duration }: EventProps) => (
+  <View
+    style={{
+      padding: 20,
+      backgroundColor: '#fff',
+    }}
+  >
+    <Text
+      style={{
+        fontSize: 18,
+        color: '#223052',
+        marginBottom: 8,
+      }}
+    >
+      {title}
+    </Text>
+    <Text
+      style={{
+        fontSize: 15,
+      }}
+    >
+      <Text
+        style={{
+          color: '#34ab50',
+        }}
+      >
+        {location}
+      </Text>
+      &nbsp;&middot;&nbsp;
+      <Text
+        style={{
+          color: '#555',
+        }}
+      >
+        {duration}
+      </Text>
+    </Text>
+  </View>
+)
+
+type SectionProps = {
+  time: string,
+}
+const Section = ({ time }: SectionProps) => (
+  <View
+    style={{
+      padding: 10,
+      backgroundColor: '#f5f8fe',
+    }}
+  >
+    <Text
+      style={{
+        color: '#223052',
+        fontWeight: 'bold',
+      }}
+    >
+      {time}
+    </Text>
+  </View>
+)
+
+const Separator = () => (
+  <View
+    style={{
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: '#eaeaef',
+    }}
+  />
+)
+
 export default class extends React.Component {
   constructor(props) {
     super(props)
@@ -71,75 +146,10 @@ export default class extends React.Component {
           </TouchableOpacity>
         </View>
         <SectionList
-          renderItem={({ item }) => (
-            <View
-              style={{
-                padding: 20,
-                backgroundColor: '#fff',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: '#223052',
-                  marginBottom: 8,
-                }}
-              >
-                {item.title}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                }}
-              >
-                <Text
-                  style={{
-                    color: '#34ab50',
-                  }}
-                >
-                  {item.location}
-                </Text>
-                &nbsp;&middot;&nbsp;
-                <Text
-                  style={{
-                    color: '#555',
-                  }}
-                >
-                  {item.duration}
-                </Text>
-              </Text>
-            </View>
-          )}
-          renderSectionHeader={({ section: { time } }) => (
-            <View
-              style={{
-                padding: 10,
-                backgroundColor: '#f5f8fe',
-              }}
-            >
-              <Text
-                style={{
-                  color: '#223052',
-                  fontWeight: 'bold',
-                }}
-              >
-                {time}
-              </Text>
-            </View>
-          )}
-          ItemSeparatorComponent={() => (
-            <View
-              style={{
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                borderBottomColor: '#eaeaef',
-              }}
-            />
-          )}
+          renderItem={({ item }) => <Event {...item} />}
+          renderSectionHeader={({ section }) => <Section {...section} />}
+          ItemSeparatorComponent={Separator}
           sections={schedule}
-          ref={list => {
-            this.list = list
-            return this.list
-          }}
           keyExtractor={(item, index) => item.title + index}
         />
       </View>
