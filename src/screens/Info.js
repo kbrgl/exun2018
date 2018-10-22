@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
-import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
+import { StyleSheet, View, Image, ScrollView } from 'react-native'
+import Text from '../components/AppText'
 
 const unirely = require('../../assets/images/unirely.png')
 const athena = require('../../assets/images/athena.png')
@@ -10,6 +11,7 @@ const logo = require('../../assets/images/logo.png')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
 })
 
@@ -35,7 +37,6 @@ export default () => (
           marginBottom: 30,
           fontSize: 25,
           fontWeight: 'bold',
-          color: '#223052',
         }}
       >
         Sponsors
@@ -82,7 +83,6 @@ export default () => (
           marginBottom: 30,
           fontSize: 25,
           fontWeight: 'bold',
-          color: '#223052',
         }}
       >
         Credits
@@ -92,7 +92,6 @@ export default () => (
           marginLeft: 30,
           marginRight: 30,
           marginBottom: 30,
-          color: '#223052',
         }}
       >
         Built by Kabir Goel with support from the app team at Exun Clan.

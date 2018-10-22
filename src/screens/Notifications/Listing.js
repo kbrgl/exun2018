@@ -1,9 +1,10 @@
 // @flow
 import React from 'react'
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { FlatList, StyleSheet, View, TouchableOpacity } from 'react-native'
 import { iOSUIKit } from 'react-native-typography'
 import LinearGradient from 'react-native-linear-gradient'
 import type NotificationType from './NotificationType'
+import Text from '../../components/AppText'
 
 const Empty = () => (
   <View
@@ -29,7 +30,6 @@ const Empty = () => (
         style={{
           textAlign: 'center',
           fontSize: 15,
-          color: '#223052',
         }}
       >
         No new notifications.
@@ -54,7 +54,6 @@ const Header = ({ clearNotifications }: HeaderProps) => (
       style={{
         fontSize: 25,
         fontWeight: 'bold',
-        color: '#223052',
       }}
     >
       Recent
@@ -107,12 +106,10 @@ const postStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
     letterSpacing: 0,
-    color: '#223052',
   },
   body: {
     fontSize: 15,
     marginTop: 8,
-    color: '#223052',
   },
   container: {
     backgroundColor: '#fff',

@@ -1,9 +1,10 @@
 // @flow
 import React from 'react'
-import { FlatList, StyleSheet, Text, View, RefreshControl } from 'react-native'
+import { FlatList, StyleSheet, View, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
 import { format } from 'date-fns'
+import Text from '../../components/AppText'
 
 import { postsRefresh } from '../../actions'
 
@@ -37,7 +38,6 @@ const Empty = () => (
         style={{
           textAlign: 'center',
           fontSize: 15,
-          color: '#223052',
         }}
       >
         Pull to refresh!
@@ -55,7 +55,6 @@ const Header = () => (
         fontSize: 25,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#223052',
       }}
     >
       Here&apos;s what&apos;s new at
@@ -75,7 +74,6 @@ const Footer = () => (
         fontWeight: 'bold',
         fontSize: 25,
         letterSpacing: 3,
-        color: '#223052',
       }}
     >
       &middot;&middot;&middot;
@@ -89,7 +87,6 @@ const postStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
     letterSpacing: 0,
-    color: '#223052',
   },
   dateWrapper: {
     paddingTop: 10,
@@ -101,7 +98,6 @@ const postStyles = StyleSheet.create({
   body: {
     fontSize: 15,
     marginTop: 8,
-    color: '#223052',
   },
   container: {
     backgroundColor: '#fff',

@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react'
 import type { Node } from 'react'
-import { TouchableOpacity, StatusBar, View, Image } from 'react-native'
+import { TouchableOpacity, StatusBar, View, Image, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import Swiper from 'react-native-swiper'
-import styled from 'styled-components'
 import LinearGradient from 'react-native-linear-gradient'
+import Text from '../AppText'
 import Page from './Page'
 import type { PageDescriptor } from './Page'
 
@@ -40,34 +40,34 @@ const Overlay = ({ show, children }: OverlayProps) => {
   return null
 }
 
-const Wrapper = styled.View`
-  justify-content: space-evenly;
-  align-items: center;
-  margin-bottom: 30px;
-  position: relative;
-`
-const Button = styled.Text`
-  background-color: #fff;
-  padding: 10px 15px;
-  margin-top: 15px;
-  border-radius: 10px;
-  overflow: hidden;
-  color: #2977f5;
-  font-weight: 800;
-`
-const Dot = styled.View`
-  background-color: #b2d0ff;
-  width: 8;
-  height: 8;
-  border-radius: 4;
-  margin-top: 3;
-  margin-bottom: 3;
-  margin-left: 3;
-  margin-right: 3;
-`
-const ActiveDot = styled(Dot)`
-  background-color: #2977f5;
-`
+const styles = StyleSheet.create({
+  wrapper: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginBottom: 30,
+    position: 'relative',
+  },
+  buttonText: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginTop: 15,
+    borderRadius: 10,
+    overflow: 'hidden',
+    color: '#2977f5',
+    fontWeight: '800',
+  },
+  dot: {
+    backgroundColor: '#b2d0ff',
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    margin: 3,
+  },
+  activeDot: {
+    backgroundColor: '#2977f5',
+  },
+})
 
 type PageSwiperProps = {
   pages: PageDescriptor[],
@@ -97,23 +97,22 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
           StatusBar.setHidden(false)
         }}
       >
-        <Button>START</Button>
+        <Text style={styles.buttonText}>START</Text>
       </TouchableOpacity>
     )
     return (
-      <Wrapper>
+      <View style={styles.wrapper}>
         <View
           style={{
             flexDirection: 'row',
           }}
         >
-          {pages.map(
-            (page, i) =>
-              index === i ? <ActiveDot key={page.heading} /> : <Dot key={page.heading} />,
-          )}
+          {pages.map((page, i) => (
+            <View key={page.heading} style={[styles.dot, index === i ? styles.activeDot : null]} />
+          ))}
         </View>
         {DoneButton}
-      </Wrapper>
+      </View>
     )
   }
 

@@ -1,34 +1,8 @@
 // @flow
 import React from 'react'
-import styled from 'styled-components'
+import { View, StyleSheet } from 'react-native'
+import Text from '../AppText'
 import rhythm from '../../utils/rhythm'
-
-const Fill = styled.View`
-  flex: 1;
-  align-self: stretch;
-`
-const Wrapper = styled.View`
-  flex: 1;
-  display: flex;
-  padding-left: 40px;
-  padding-right: 40px;
-`
-const TextWrapper = styled.View`
-  display: flex;
-  justify-content: center;
-`
-const Heading = styled.Text`
-  color: #223052;
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: ${rhythm(2)};
-  text-align: center;
-`
-const Body = styled.Text`
-  color: #223052;
-  font-size: 18px;
-  text-align: center;
-`
 
 export type PageDescriptor = {
   heading: string,
@@ -37,14 +11,38 @@ export type PageDescriptor = {
 
 type PageProps = PageDescriptor
 const Page = ({ heading, body }: PageProps) => (
-  <Fill>
-    <Wrapper>
-      <TextWrapper>
-        <Heading>{heading}</Heading>
-        <Body>{body}</Body>
-      </TextWrapper>
-    </Wrapper>
-  </Fill>
+  <View style={styles.fill}>
+    <View style={styles.wrapper}>
+      <View style={styles.textWrapper}>
+        <Text style={styles.heading}>{heading}</Text>
+        <Text style={styles.body}>{body}</Text>
+      </View>
+    </View>
+  </View>
 )
+
+const styles = StyleSheet.create({
+  fill: {
+    flex: 1,
+    alignSelf: 'stretch',
+  },
+  wrapper: {
+    flex: 1,
+    paddingHorizontal: 40,
+  },
+  textWrapper: {
+    justifyContent: 'center',
+  },
+  heading: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: rhythm(2),
+    textAlign: 'center',
+  },
+  body: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+})
 
 export default Page

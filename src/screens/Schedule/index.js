@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, SectionList } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, SectionList } from 'react-native'
+import Text from '../../components/AppText'
 
 import days from './schedule'
 
@@ -21,7 +22,6 @@ const styles = StyleSheet.create({
     borderColor: '#eaeaef',
   },
   buttonText: {
-    color: '#223052',
     fontWeight: 'bold',
     letterSpacing: 1,
   },
@@ -42,7 +42,6 @@ const Event = ({ title, location, duration }: EventProps) => (
     <Text
       style={{
         fontSize: 18,
-        color: '#223052',
         marginBottom: 8,
       }}
     >
@@ -84,7 +83,6 @@ const Section = ({ time }: SectionProps) => (
   >
     <Text
       style={{
-        color: '#223052',
         fontWeight: 'bold',
       }}
     >
