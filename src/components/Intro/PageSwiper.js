@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import type { Node } from 'react'
-import { TouchableOpacity, StatusBar, View, Image, StyleSheet } from 'react-native'
+import { TouchableOpacity, View, Image, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import Swiper from 'react-native-swiper'
 import LinearGradient from 'react-native-linear-gradient'
@@ -94,7 +94,6 @@ class PageSwiper extends Component<PageSwiperProps, PageSwiperState> {
       <TouchableOpacity
         onPress={async () => {
           complete()
-          StatusBar.setHidden(false)
         }}
       >
         <Text style={styles.buttonText}>START</Text>

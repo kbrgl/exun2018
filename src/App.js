@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, AppState } from 'react-native'
+import { View, AppState, StatusBar } from 'react-native'
 import { Provider, connect } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import FeatherIcon from 'react-native-vector-icons/Feather'
@@ -215,6 +215,7 @@ class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <View style={{ flex: 1, backgroundColor: '#f5f8fe' }}>
+            <StatusBar backgroundColor="#2977f5" barStyle="light-content" />
             <Intro />
             <Tabs />
           </View>
