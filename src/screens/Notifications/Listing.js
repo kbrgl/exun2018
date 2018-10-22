@@ -120,7 +120,7 @@ const postStyles = StyleSheet.create({
 // eslint-disable-next-line camelcase
 const Notification = ({ title, body }: NotificationType) => (
   <View style={postStyles.container}>
-    <Text style={[iOSUIKit.subheadEmphasized, postStyles.title]}>{title}</Text>
+    <Text style={postStyles.title}>{title}</Text>
     <Text style={postStyles.body}>{body}</Text>
   </View>
 )
