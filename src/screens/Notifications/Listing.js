@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import { FlatList, StyleSheet, View, TouchableOpacity } from 'react-native'
-import { iOSUIKit } from 'react-native-typography'
 import LinearGradient from 'react-native-linear-gradient'
 import type NotificationType from './NotificationType'
 import Text from '../../components/AppText'
