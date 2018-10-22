@@ -5,6 +5,7 @@ import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
 const unirely = require('../../assets/images/unirely.png')
 const athena = require('../../assets/images/athena.png')
 const digitalIndia = require('../../assets/images/digital-india.png')
+const logo = require('../../assets/images/logo.png')
 
 const styles = StyleSheet.create({
   container: {
@@ -15,10 +16,23 @@ const styles = StyleSheet.create({
 export default () => (
   <View style={styles.container}>
     <ScrollView showsVerticalScrollIndicator={false}>
+      <Image
+        style={{
+          width: 200,
+          height: 80,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginVertical: 30,
+        }}
+        source={logo}
+        defaultSource={logo}
+        resizeMode="cover"
+      />
       <Text
         style={{
           marginLeft: 30,
           marginTop: 30,
+          marginBottom: 30,
           fontSize: 25,
           fontWeight: 'bold',
           color: '#223052',
@@ -26,46 +40,46 @@ export default () => (
       >
         Sponsors
       </Text>
-      <Image
-        style={{
-          width: 200,
-          height: 80,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: 30,
-        }}
-        source={unirely}
-        defaultSource={unirely}
-        resizeMode="cover"
-      />
-      <Image
-        style={{
-          width: 189,
-          height: 120,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: 20,
-        }}
-        source={athena}
-        defaultSource={athena}
-        resizeMode="cover"
-      />
-      <Image
-        style={{
-          width: 189,
-          height: 120,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: 20,
-        }}
-        source={digitalIndia}
-        defaultSource={digitalIndia}
-        resizeMode="cover"
-      />
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <Image
+          style={{
+            width: 200,
+            height: 80,
+            marginLeft: 10,
+            marginRight: 20,
+          }}
+          source={unirely}
+          defaultSource={unirely}
+          resizeMode="cover"
+        />
+        <Image
+          style={{
+            width: 130,
+            height: 84,
+            marginLeft: 10,
+            marginRight: 40,
+          }}
+          source={athena}
+          defaultSource={athena}
+          resizeMode="cover"
+        />
+        <Image
+          style={{
+            width: 135,
+            height: 85.7,
+            marginLeft: 10,
+            marginRight: 30,
+          }}
+          source={digitalIndia}
+          defaultSource={digitalIndia}
+          resizeMode="cover"
+        />
+      </ScrollView>
       <Text
         style={{
           marginLeft: 30,
           marginTop: 30,
+          marginBottom: 30,
           fontSize: 25,
           fontWeight: 'bold',
           color: '#223052',
@@ -77,7 +91,6 @@ export default () => (
         style={{
           marginLeft: 30,
           marginRight: 30,
-          marginTop: 30,
           marginBottom: 30,
           color: '#223052',
         }}

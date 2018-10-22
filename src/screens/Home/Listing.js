@@ -2,7 +2,6 @@
 import React from 'react'
 import { FlatList, StyleSheet, Text, View, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
-import { iOSUIKit } from 'react-native-typography'
 import LinearGradient from 'react-native-linear-gradient'
 import { format } from 'date-fns'
 
@@ -30,7 +29,7 @@ const Empty = () => (
         paddingLeft: 30,
         paddingRight: 30,
         borderRadius: 200,
-        borderWidth: 1,
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: '#eaeaef',
       }}
     >
@@ -39,7 +38,6 @@ const Empty = () => (
           textAlign: 'center',
           fontSize: 15,
           color: '#223052',
-          fontWeight: 'bold',
         }}
       >
         Pull to refresh!
@@ -87,6 +85,8 @@ const Footer = () => (
 
 const postStyles = StyleSheet.create({
   title: {
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 8,
     letterSpacing: 0,
     color: '#223052',
@@ -112,7 +112,7 @@ const postStyles = StyleSheet.create({
 // eslint-disable-next-line camelcase
 const Post = ({ title, body, created_at }: PostType) => (
   <View style={postStyles.container}>
-    <Text style={[iOSUIKit.largeTitleEmphasized, postStyles.title]}>{title}</Text>
+    <Text style={postStyles.title}>{title}</Text>
     <Text style={postStyles.body}>{body}</Text>
     <View style={postStyles.dateWrapper}>
       <Text style={postStyles.date}>{format(created_at, 'd MMM yyyy, hh:mm:ss')}</Text>

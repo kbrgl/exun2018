@@ -21,7 +21,7 @@ const Empty = () => (
         paddingLeft: 30,
         paddingRight: 30,
         borderRadius: 200,
-        borderWidth: 1,
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: '#eaeaef',
       }}
     >
@@ -30,7 +30,6 @@ const Empty = () => (
           textAlign: 'center',
           fontSize: 15,
           color: '#223052',
-          fontWeight: 'bold',
         }}
       >
         No new notifications.
@@ -61,15 +60,30 @@ const Header = ({ clearNotifications }: HeaderProps) => (
       Recent
     </Text>
     <TouchableOpacity onPress={clearNotifications}>
-      <Text
+      <View
         style={{
-          color: '#2977f5',
-          fontWeight: 'bold',
-          letterSpacing: 1,
+          shadowOffset: {
+            width: 0,
+            height: 3,
+          },
+          borderWidth: StyleSheet.hairlineWidth,
+          borderColor: '#eaeaef',
+          borderRadius: 50,
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          backgroundColor: '#fff',
         }}
       >
-        CLEAR
-      </Text>
+        <Text
+          style={{
+            color: '#2977f5',
+            fontWeight: 'bold',
+            letterSpacing: 1,
+          }}
+        >
+          CLEAR
+        </Text>
+      </View>
     </TouchableOpacity>
   </LinearGradient>
 )
@@ -89,7 +103,8 @@ const Separator = () => (
 
 const postStyles = StyleSheet.create({
   title: {
-    fontSize: 15,
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 8,
     letterSpacing: 0,
     color: '#223052',

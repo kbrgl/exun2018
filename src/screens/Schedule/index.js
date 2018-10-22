@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  buttonTextWrapper: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#eaeaef',
+  },
   buttonText: {
     color: '#223052',
     fontWeight: 'bold',
@@ -99,14 +106,14 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      schedule: days[0],
+      day: 1,
     }
   }
 
   list: ?SectionList
 
   render() {
-    const { schedule } = this.state
+    const { day } = this.state
     return (
       <View style={styles.container}>
         <View
@@ -122,34 +129,32 @@ export default class extends React.Component {
             style={styles.button}
             onPress={() => {
               this.setState({
-                schedule: days[0],
+                day: 1,
               })
             }}
           >
-            <Text style={styles.buttonText}>DAY 1</Text>
+            <View style={day === 1 ? styles.buttonTextWrapper : null}>
+              <Text style={styles.buttonText}>DAY 1</Text>
+            </View>
           </TouchableOpacity>
-          <View
-            style={{
-              flexBasis: StyleSheet.hairlineWidth,
-              backgroundColor: '#eaeaef',
-            }}
-          />
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
               this.setState({
-                schedule: days[1],
+                day: 2,
               })
             }}
           >
-            <Text style={styles.buttonText}>DAY 2</Text>
+            <View style={day === 2 ? styles.buttonTextWrapper : null}>
+              <Text style={styles.buttonText}>DAY 2</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <SectionList
           renderItem={({ item }) => <Event {...item} />}
           renderSectionHeader={({ section }) => <Section {...section} />}
           ItemSeparatorComponent={Separator}
-          sections={schedule}
+          sections={days[day - 1]}
           keyExtractor={(item, index) => item.title + index}
         />
       </View>
