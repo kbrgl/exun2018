@@ -225,6 +225,4 @@ class App extends React.Component {
   }
 }
 
-export default codePush({
-  mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESUME,
-})(App)
+export default codePush({})(App)
