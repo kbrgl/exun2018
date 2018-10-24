@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 
 import Listing from './Listing'
-import { clearNotifications, readNotifications } from '../../actions'
+import { clearNotifications, readNotifications } from '../../store/actions'
 import type NotificationType from './NotificationType'
 
 const styles = StyleSheet.create({

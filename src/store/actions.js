@@ -4,7 +4,7 @@ import {
   RECEIVED_NOTIFICATION,
   CLEAR_NOTIFICATIONS,
   READ_NOTIFICATIONS,
-} from '../constants'
+} from './constants'
 
 export const postsRefresh = () => ({
   type: POSTS_REFRESH,

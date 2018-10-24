@@ -1,12 +1,8 @@
 import React from 'react'
 import { View, AppState, StatusBar } from 'react-native'
 import { Provider, connect } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
-import createSagaMiddleware from 'redux-saga'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import OneSignal from 'react-native-onesignal'
 import codePush from 'react-native-code-push'
@@ -18,22 +14,29 @@ import Schedule from './screens/Schedule'
 
 import Intro from './components/Intro'
 
-import rootSaga from './sagas'
+import configureStore from './store'
+import { postsRefresh, receivedNotification } from './store/actions'
 
-import rootReducer from './reducers'
-import { postsRefresh, receivedNotification } from './actions'
+const { store, persistor } = configureStore()
 
-const persistConfig = {
-  key: 'root',
-  storage,
-}
+/**
+ * Setup notifications
+ */
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+OneSignal.init('73966f65-91f6-4d9d-93be-4fd9d4621237')
 
-const sagaMiddleware = createSagaMiddleware()
-const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware))
-const persistor = persistStore(store)
-sagaMiddleware.run(rootSaga)
+// If a notification is received while the app is in the foreground,
+// send it to notification shade.
+// This overrides the default behaviour, which is an annoying alert.
+OneSignal.inFocusDisplaying(2)
+
+OneSignal.addEventListener('received', notification => {
+  store.dispatch(receivedNotification(notification))
+})
+
+/**
+ * Setup stacks for individual screens
+ */
 
 const stackConfig = {
   headerMode: 'float',
@@ -130,6 +133,10 @@ const ConnectedNotificationsIcon = connect(state => ({
   unread: state.notifications.filter(notification => !notification.read).length,
 }))(NotificationsIcon)
 
+/**
+ * Create tabs
+ */
+
 const Tabs = createBottomTabNavigator(
   {
     Home: HomeStack,
@@ -172,25 +179,16 @@ const Tabs = createBottomTabNavigator(
   },
 )
 
+/**
+ * Main app component
+ */
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       appState: AppState.currentState,
     }
-  }
-
-  componentWillMount() {
-    OneSignal.init('73966f65-91f6-4d9d-93be-4fd9d4621237')
-
-    // If a notification is received while the app is in the foreground,
-    // send it to notification shade.
-    // This overrides the default behaviour, which is an annoying alert.
-    OneSignal.inFocusDisplaying(2)
-
-    OneSignal.addEventListener('received', notification => {
-      store.dispatch(receivedNotification(notification))
-    })
   }
 
   componentDidMount() {
@@ -224,5 +222,9 @@ class App extends React.Component {
     )
   }
 }
+
+/**
+ * CodePush-ify app
+ */
 
 export default codePush({})(App)

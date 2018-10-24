@@ -1,5 +1,5 @@
 import { put, takeLatest, call } from 'redux-saga/effects'
-import { POSTS_REFRESH, POSTS_REFRESH_SUCCESS } from '../constants'
+import { POSTS_REFRESH, POSTS_REFRESH_SUCCESS } from './constants'
 import api from '../api'
 
 function* fetchPosts() {

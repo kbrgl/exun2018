@@ -9,7 +9,7 @@ import Text from '../AppText'
 import Page from './Page'
 import type { PageDescriptor } from './Page'
 
-import { introDone } from '../../actions'
+import { introDone } from '../../store/actions'
 
 const logo = require('../../../assets/images/logo.png')
 

@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { format } from 'date-fns'
 import Text from '../../components/AppText'
 
-import { postsRefresh } from '../../actions'
+import { postsRefresh } from '../../store/actions'
 
 type PostType = {
   title: string,

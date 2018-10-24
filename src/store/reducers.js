@@ -5,7 +5,7 @@ import {
   RECEIVED_NOTIFICATION,
   CLEAR_NOTIFICATIONS,
   READ_NOTIFICATIONS,
-} from '../constants'
+} from './constants'
 
 const initialState = {
   listing: {
