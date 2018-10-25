@@ -146,13 +146,18 @@ const dayTwo = [
         duration: '5h30m',
       },
       {
+        title: 'Surprise Event for Girls',
+        location: 'Computer Labs',
+        duration: '5h30m',
+      },
+      {
         title: 'Competitive Programming - Finals',
         location: 'Computer Labs',
         duration: '5h30m',
       },
       {
         title: 'Surprise - Finals',
-        location: 'Computer Labs',
+        location: 'Shogun Lab',
         duration: '2h30m',
       },
     ],
